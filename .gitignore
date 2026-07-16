@@ -44,3 +44,6 @@ next-env.d.ts
 
 # scraper drafts (regenerable, contains third-party content excerpts)
 /scripts/scraper/draft/
+
+# workbuddy runtime memory (tool artifact, not project content)
+/.workbuddy/
