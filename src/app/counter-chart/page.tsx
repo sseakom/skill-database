@@ -40,7 +40,7 @@ export default function CounterChartPage() {
           流派克制图谱
         </h1>
         <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-          12 大流派的有向克制关系。箭头 A → B 表示 A 克制 B。点击节点高亮其克制（红）与被克（橙）关系，并查看详情。
+          13 大流派的有向克制关系。箭头 A → B 表示 A 克制 B。点击节点高亮其克制（红）与被克（橙）关系，并查看详情。
         </p>
       </header>
 

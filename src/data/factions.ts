@@ -1,7 +1,7 @@
 import type { Faction } from "@/lib/types";
 
 /**
- * 12 大流派种子数据（机制 + 克制关系，调研较充分）
+ * 13 大流派种子数据（机制 + 克制关系，调研较充分）
  *
  * 克制关系单一数据源：仅维护 counters[]（A→B 表示 A 克 B），
  * counteredBy 由 lib/data.ts 的 getFactions() 自动派生为镜像。
@@ -95,11 +95,11 @@ export const factions: Faction[] = [
   {
     id: "frost",
     name: "冰冻流",
-    description: "降攻速控场，克制普攻流与精灵规模，容错较高。",
-    mechanics: "施加冰冻降低敌方攻速，限制高频普攻与召唤规模，控场能力强。",
-    strengths: ["克制普攻流", "克制精灵规模", "控场强", "容错高"],
+    description: "降攻速控场，克制普攻流、精灵规模与极速流，容错较高。",
+    mechanics: "施加冰冻降低敌方攻速，限制高频普攻与召唤规模，并打断极速流的核心循环，控场能力强。",
+    strengths: ["克制普攻流", "克制精灵规模", "克制极速流", "控场强", "容错高"],
     weaknesses: ["怕必中/魔法大招", "伤害偏低"],
-    counters: ["normal-attack", "summon"],
+    counters: ["normal-attack", "summon", "haste"],
     synergy: ["poison", "ultimate"],
     color: "#06b6d4",
     verified: false,
@@ -150,6 +150,19 @@ export const factions: Faction[] = [
     counters: ["shield"],
     synergy: ["crit", "vulnerable"],
     color: "#f43f5e",
+    verified: false,
+  },
+  {
+    id: "haste",
+    name: "极速流",
+    description: "通过提升攻击频率与输出节奏放大伤害，本身不直接造伤，是通用伤害放大器。",
+    mechanics: "增加英雄攻击频率与技能触发频率，使已有伤害来源（盾伤打击、毒伤、生命之击等）在单位时间内打出更多次，从而放大总输出。",
+    strengths: ["通用频率放大，适配任何伤害来源", "低成本成型，1 星即可发挥作用", "加速技能/大招循环，攻防一体"],
+    weaknesses: ["本身不直接造伤，必须搭配其他流派", "被冰冻流克制（降攻速打断循环）", "持久战频率优势被稀释"],
+    // 注：以下克制关系（极速克命/盾/灵）为基于旧版「攻暴克命盾灵」并叠加极速后「攻暴速克命盾灵」的类比推断，待实测校对。
+    counters: ["life", "shield", "summon"],
+    synergy: ["shield", "vulnerable", "fury", "poison", "ultimate"],
+    color: "#0ea5e9",
     verified: false,
   },
 ];

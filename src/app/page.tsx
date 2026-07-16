@@ -73,7 +73,7 @@ export default function HomePage() {
 
       {/* 流派色环 */}
       <section className="mb-12">
-        <h2 className="mb-4 text-lg font-semibold">12 大流派</h2>
+        <h2 className="mb-4 text-lg font-semibold">13 大流派</h2>
         <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-6">
           {factions.map((f) => (
             <Link
