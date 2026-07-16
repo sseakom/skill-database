@@ -6,6 +6,9 @@ import type { Faction } from "@/lib/types";
  * 克制关系单一数据源：仅维护 counters[]（A→B 表示 A 克 B），
  * counteredBy 由 lib/data.ts 的 getFactions() 自动派生为镜像。
  * 数值未官方校对的字段置 verified=false。
+ *
+ * color 字段已对齐游戏内官方流派图标取色（2026-07，人工取色），
+ * 但机制描述/克制数值仍待校对，故 verified 暂保持 false。
  */
 export const factions: Faction[] = [
   {
@@ -17,7 +20,7 @@ export const factions: Faction[] = [
     weaknesses: ["被冰冻流克制（降攻速）", "被大招流克制", "缺乏爆发"],
     counters: [],
     synergy: ["crit", "life"],
-    color: "#ef4444",
+    color: "#4f414b",
     verified: false,
   },
   {
@@ -29,7 +32,7 @@ export const factions: Faction[] = [
     weaknesses: ["暴击上限 75，后期收益递减", "依赖触发"],
     counters: [],
     synergy: ["normal-attack", "fury", "life"],
-    color: "#f97316",
+    color: "#a7442d",
     verified: false,
   },
   {
@@ -41,7 +44,7 @@ export const factions: Faction[] = [
     weaknesses: ["被中毒流克制（毒无视闪避）", "前期弱", "怕必中伤害"],
     counters: [],
     synergy: ["life", "shield"],
-    color: "#22c55e",
+    color: "#585474",
     verified: false,
   },
   {
@@ -53,7 +56,7 @@ export const factions: Faction[] = [
     weaknesses: ["前期乏力", "怕斩杀类大招", "成型慢"],
     counters: ["shield"],
     synergy: ["normal-attack", "shield"],
-    color: "#dc2626",
+    color: "#a67249",
     verified: false,
   },
   {
@@ -65,7 +68,7 @@ export const factions: Faction[] = [
     weaknesses: ["当前版本弱势", "怕爆发", "回复上限有限"],
     counters: ["poison"],
     synergy: ["shield", "dodge"],
-    color: "#10b981",
+    color: "#b19f64",
     verified: false,
   },
   {
@@ -77,7 +80,7 @@ export const factions: Faction[] = [
     weaknesses: ["频率低", "怕减伤/护盾", "依赖回蓝"],
     counters: ["normal-attack", "dodge", "life", "summon"],
     synergy: ["frost", "poison"],
-    color: "#8b5cf6",
+    color: "#6b9d8b",
     verified: false,
   },
   {
@@ -89,7 +92,7 @@ export const factions: Faction[] = [
     weaknesses: ["被解毒机制克制", "怕爆发秒杀", "前期层数不足"],
     counters: ["dodge"],
     synergy: ["frost", "ultimate"],
-    color: "#84cc16",
+    color: "#627953",
     verified: false,
   },
   {
@@ -101,7 +104,7 @@ export const factions: Faction[] = [
     weaknesses: ["怕必中/魔法大招", "伤害偏低"],
     counters: ["normal-attack", "summon", "haste"],
     synergy: ["poison", "ultimate"],
-    color: "#06b6d4",
+    color: "#527893",
     verified: false,
   },
   {
@@ -113,7 +116,7 @@ export const factions: Faction[] = [
     weaknesses: ["怕真实伤害/斩杀", "被怒气流破盾", "输出不足"],
     counters: [],
     synergy: ["heal", "dodge"],
-    color: "#3b82f6",
+    color: "#65493b",
     verified: false,
   },
   {
@@ -125,7 +128,7 @@ export const factions: Faction[] = [
     weaknesses: ["自身脆", "依赖触发频率"],
     counters: [],
     synergy: ["crit", "normal-attack"],
-    color: "#eab308",
+    color: "#71338e",
     verified: false,
   },
   {
@@ -137,7 +140,7 @@ export const factions: Faction[] = [
     weaknesses: ["依赖英雄适配", "怕范围清场/大招", "被冰冻降规模", "前期弱"],
     counters: [],
     synergy: ["life", "heal"],
-    color: "#ec4899",
+    color: "#956c7d",
     verified: false,
   },
   {
@@ -149,7 +152,7 @@ export const factions: Faction[] = [
     weaknesses: ["需资源管理", "怕降攻速/控场", "怕持续消耗"],
     counters: ["shield"],
     synergy: ["crit", "vulnerable"],
-    color: "#f43f5e",
+    color: "#602d33",
     verified: false,
   },
   {
@@ -162,7 +165,7 @@ export const factions: Faction[] = [
     // 注：以下克制关系（极速克命/盾/灵）为基于旧版「攻暴克命盾灵」并叠加极速后「攻暴速克命盾灵」的类比推断，待实测校对。
     counters: ["life", "shield", "summon"],
     synergy: ["shield", "vulnerable", "fury", "poison", "ultimate"],
-    color: "#0ea5e9",
+    color: "#635960",
     verified: false,
   },
 ];
