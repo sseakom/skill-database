@@ -9,6 +9,7 @@ import type { Faction } from "@/lib/types";
  *
  * color 字段已对齐游戏内官方流派图标取色（2026-07，人工取色），
  * 但机制描述/克制数值仍待校对，故 verified 暂保持 false。
+ * 取色精度：HIGH 8 派、MED 4 派（回复/冰冻/易伤/精灵/怒气）、LOW 1 派（护盾）。
  */
 export const factions: Faction[] = [
   {
@@ -20,7 +21,7 @@ export const factions: Faction[] = [
     weaknesses: ["被冰冻流克制（降攻速）", "被大招流克制", "缺乏爆发"],
     counters: [],
     synergy: ["crit", "life"],
-    color: "#4f414b",
+    color: "#5dbe2e",
     verified: false,
   },
   {
@@ -32,7 +33,7 @@ export const factions: Faction[] = [
     weaknesses: ["暴击上限 75，后期收益递减", "依赖触发"],
     counters: [],
     synergy: ["normal-attack", "fury", "life"],
-    color: "#a7442d",
+    color: "#ec2e10",
     verified: false,
   },
   {
@@ -44,7 +45,7 @@ export const factions: Faction[] = [
     weaknesses: ["被中毒流克制（毒无视闪避）", "前期弱", "怕必中伤害"],
     counters: [],
     synergy: ["life", "shield"],
-    color: "#585474",
+    color: "#f0a040",
     verified: false,
   },
   {
@@ -56,7 +57,7 @@ export const factions: Faction[] = [
     weaknesses: ["前期乏力", "怕斩杀类大招", "成型慢"],
     counters: ["shield"],
     synergy: ["normal-attack", "shield"],
-    color: "#a67249",
+    color: "#68eacc",
     verified: false,
   },
   {
@@ -68,7 +69,7 @@ export const factions: Faction[] = [
     weaknesses: ["当前版本弱势", "怕爆发", "回复上限有限"],
     counters: ["poison"],
     synergy: ["shield", "dodge"],
-    color: "#b19f64",
+    color: "#b8e050",
     verified: false,
   },
   {
@@ -80,7 +81,7 @@ export const factions: Faction[] = [
     weaknesses: ["频率低", "怕减伤/护盾", "依赖回蓝"],
     counters: ["normal-attack", "dodge", "life", "summon"],
     synergy: ["frost", "poison"],
-    color: "#6b9d8b",
+    color: "#4aaae0",
     verified: false,
   },
   {
@@ -92,7 +93,7 @@ export const factions: Faction[] = [
     weaknesses: ["被解毒机制克制", "怕爆发秒杀", "前期层数不足"],
     counters: ["dodge"],
     synergy: ["frost", "ultimate"],
-    color: "#627953",
+    color: "#9424d8",
     verified: false,
   },
   {
@@ -104,7 +105,7 @@ export const factions: Faction[] = [
     weaknesses: ["怕必中/魔法大招", "伤害偏低"],
     counters: ["normal-attack", "summon", "haste"],
     synergy: ["poison", "ultimate"],
-    color: "#527893",
+    color: "#38c8de",
     verified: false,
   },
   {
@@ -116,7 +117,7 @@ export const factions: Faction[] = [
     weaknesses: ["怕真实伤害/斩杀", "被怒气流破盾", "输出不足"],
     counters: [],
     synergy: ["heal", "dodge"],
-    color: "#65493b",
+    color: "#8e8296", // 取色精度 LOW，待复核
     verified: false,
   },
   {
@@ -128,7 +129,7 @@ export const factions: Faction[] = [
     weaknesses: ["自身脆", "依赖触发频率"],
     counters: [],
     synergy: ["crit", "normal-attack"],
-    color: "#71338e",
+    color: "#d41a6c",
     verified: false,
   },
   {
@@ -140,7 +141,7 @@ export const factions: Faction[] = [
     weaknesses: ["依赖英雄适配", "怕范围清场/大招", "被冰冻降规模", "前期弱"],
     counters: [],
     synergy: ["life", "heal"],
-    color: "#956c7d",
+    color: "#f04878",
     verified: false,
   },
   {
@@ -152,7 +153,7 @@ export const factions: Faction[] = [
     weaknesses: ["需资源管理", "怕降攻速/控场", "怕持续消耗"],
     counters: ["shield"],
     synergy: ["crit", "vulnerable"],
-    color: "#602d33",
+    color: "#a01c18",
     verified: false,
   },
   {
