@@ -33,6 +33,24 @@ export interface BaseStats {
   critDamage?: number;
 }
 
+/** 技能对属性的结构化加成（供模拟器结算，数值待官方校对） */
+export interface StatBonuses {
+  /** 攻击力 +X 点 */
+  attack?: number;
+  /** 攻速 +X */
+  attackSpeed?: number;
+  /** 回蓝 +X */
+  energy?: number;
+  /** 闪避 +X（百分点） */
+  dodge?: number;
+  /** 暴击 +X（百分点） */
+  crit?: number;
+  /** 爆伤 +X（倍数，0.4 = +0.4x） */
+  critDamage?: number;
+  /** 生命 +X 点 */
+  hp?: number;
+}
+
 /** 天赋 / 被动技能描述 */
 export interface Ability {
   name: string;
@@ -81,6 +99,8 @@ export interface Skill {
   effect: string;
   /** 各星级效果（索引 0=1 星 … 3=4 星） */
   starBonuses?: string[];
+  /** 对英雄属性的结构化加成（模拟器结算用，固定值累加，不随星级缩放） */
+  statBonuses?: StatBonuses;
   description: string;
   imageUrl?: string;
   verified?: boolean;

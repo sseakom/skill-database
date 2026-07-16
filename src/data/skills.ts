@@ -3,6 +3,25 @@ import type { Skill } from "@/lib/types";
 /**
  * 技能种子数据（代表性样本，覆盖主要流派与三品阶）
  * verified=false 表示待官方校对。
+ *
+ * statBonuses 为模拟器结算用的结构化属性加成（固定值累加，不随星级缩放）。
+ * 当前数值按流派机制模板 + 品阶档位占位估算，待官方校对：
+ *   normal:     attack+5 / crit+5 / dodge+5 / hp+80 / attackSpeed+0.05 / energy+1 / critDamage+0.2
+ *   rare:       attack+10 / crit+10 / dodge+10 / hp+160 / attackSpeed+0.1 / energy+2 / critDamage+0.4
+ *   legendary:  attack+18 / crit+15 / dodge+15 / hp+280 / attackSpeed+0.15 / energy+3 / critDamage+0.6
+ * 各流派加成项（每技按其流派从模板选 1-3 项，数值取对应品阶档）：
+ *   普攻(normal-attack): attackSpeed, attack
+ *   暴击(crit):          crit, critDamage
+ *   闪避(dodge):         dodge
+ *   生命(life):          hp
+ *   回复(heal):          hp, energy
+ *   大招(ultimate):      energy, attack
+ *   中毒(poison):        energy, attack
+ *   冰冻(frost):         energy, attack
+ *   护盾(shield):        hp
+ *   易伤(vulnerable):    attack
+ *   精灵(summon):        attack, energy
+ *   怒气(fury):          attack, crit
  */
 export const skills: Skill[] = [
   // 普攻流
@@ -15,6 +34,7 @@ export const skills: Skill[] = [
     exp: 1,
     effect: "普攻概率触发额外一次攻击。",
     description: "普攻流基础触发技，提升攻击频率。",
+    statBonuses: { attackSpeed: 0.05, attack: 5 },
     verified: false,
   },
   {
@@ -27,6 +47,7 @@ export const skills: Skill[] = [
     effect: "普攻造成范围溅射。",
     description: "普攻溅射多目标，提升清场能力。",
     starBonuses: ["溅射 30%", "溅射 50%", "溅射 70%", "溅射 100%"],
+    statBonuses: { attackSpeed: 0.1, attack: 10 },
     verified: false,
   },
   {
@@ -38,6 +59,7 @@ export const skills: Skill[] = [
     exp: 3,
     effect: "攻速大幅提升，每次攻击叠加快捷。",
     description: "普攻流传奇，攻速无上限叠加。",
+    statBonuses: { attackSpeed: 0.15, attack: 18 },
     verified: false,
   },
   // 暴击流
@@ -50,6 +72,7 @@ export const skills: Skill[] = [
     exp: 1,
     effect: "提升暴击率。",
     description: "暴击流基础，稳定提升暴击。",
+    statBonuses: { crit: 5, critDamage: 0.2 },
     verified: false,
   },
   {
@@ -61,6 +84,7 @@ export const skills: Skill[] = [
     exp: 2,
     effect: "暴击触发额外真实伤害。",
     description: "暴击流触发增伤，协同高频暴击。",
+    statBonuses: { crit: 10, critDamage: 0.4 },
     verified: false,
   },
   // 闪避流
@@ -73,6 +97,7 @@ export const skills: Skill[] = [
     exp: 1,
     effect: "提升闪避率。",
     description: "闪避流基础。",
+    statBonuses: { dodge: 5 },
     verified: false,
   },
   {
@@ -84,6 +109,7 @@ export const skills: Skill[] = [
     exp: 2,
     effect: "闪避后概率反击造成物理伤害。",
     description: "闪避流核心触发技。",
+    statBonuses: { dodge: 10 },
     verified: false,
   },
   // 中毒流
@@ -96,6 +122,7 @@ export const skills: Skill[] = [
     exp: 1,
     effect: "施加中毒层数。",
     description: "中毒流基础叠层技。",
+    statBonuses: { energy: 1, attack: 5 },
     verified: false,
   },
   {
@@ -107,6 +134,7 @@ export const skills: Skill[] = [
     exp: 2,
     effect: "中毒层数扩散至全场。",
     description: "中毒流扩散，群体 DOT。",
+    statBonuses: { energy: 2, attack: 10 },
     verified: false,
   },
   {
@@ -118,6 +146,7 @@ export const skills: Skill[] = [
     exp: 3,
     effect: "中毒无视闪避并按比例造成真实伤害。",
     description: "中毒流传奇，克制闪避。",
+    statBonuses: { energy: 3, attack: 18 },
     verified: false,
   },
   // 冰冻流
@@ -130,6 +159,7 @@ export const skills: Skill[] = [
     exp: 1,
     effect: "攻击附加降攻速。",
     description: "冰冻流基础。",
+    statBonuses: { energy: 1, attack: 5 },
     verified: false,
   },
   {
@@ -141,6 +171,7 @@ export const skills: Skill[] = [
     exp: 2,
     effect: "冰冻敌方大幅降攻速。",
     description: "冰冻流核心控场技，克制普攻。",
+    statBonuses: { energy: 2, attack: 10 },
     verified: false,
   },
   // 大招流
@@ -153,6 +184,7 @@ export const skills: Skill[] = [
     exp: 1,
     effect: "提升回蓝。",
     description: "大招流基础回蓝图。",
+    statBonuses: { energy: 1, attack: 5 },
     verified: false,
   },
   {
@@ -164,6 +196,7 @@ export const skills: Skill[] = [
     exp: 3,
     effect: "大招伤害大幅提升。",
     description: "大招流传奇，强化大招质量。",
+    statBonuses: { energy: 3, attack: 18 },
     verified: false,
   },
   // 怒气流
@@ -176,6 +209,7 @@ export const skills: Skill[] = [
     exp: 1,
     effect: "受击积攒怒气。",
     description: "怒气流基础。",
+    statBonuses: { attack: 5, crit: 5 },
     verified: false,
   },
   {
@@ -187,6 +221,7 @@ export const skills: Skill[] = [
     exp: 3,
     effect: "消耗怒气造成面板最高伤害。",
     description: "怒气流传奇爆发技。",
+    statBonuses: { attack: 18, crit: 15 },
     verified: false,
   },
   // 护盾流
@@ -199,6 +234,7 @@ export const skills: Skill[] = [
     exp: 1,
     effect: "生成护盾减伤。",
     description: "护盾流基础。",
+    statBonuses: { hp: 80 },
     verified: false,
   },
   {
@@ -210,6 +246,7 @@ export const skills: Skill[] = [
     exp: 2,
     effect: "护盾量与减伤提升。",
     description: "护盾流强化技。",
+    statBonuses: { hp: 160 },
     verified: false,
   },
   // 生命流
@@ -222,6 +259,7 @@ export const skills: Skill[] = [
     exp: 1,
     effect: "损血时触发增益，提升攻击力。",
     description: "生命流基础触发技。",
+    statBonuses: { hp: 80 },
     verified: false,
   },
   {
@@ -233,6 +271,7 @@ export const skills: Skill[] = [
     exp: 2,
     effect: "血量越低攻击越高，损血触发真实伤害。",
     description: "生命流核心，损血即战力。",
+    statBonuses: { hp: 160 },
     verified: false,
   },
   {
@@ -244,6 +283,7 @@ export const skills: Skill[] = [
     exp: 3,
     effect: "血量上限大幅提升，损血造成真实伤害破盾。",
     description: "生命流传奇，破盾利器。",
+    statBonuses: { hp: 280 },
     verified: false,
   },
   // 回复流
@@ -256,6 +296,7 @@ export const skills: Skill[] = [
     exp: 1,
     effect: "持续回复生命。",
     description: "回复流基础续航技。",
+    statBonuses: { hp: 80, energy: 1 },
     verified: false,
   },
   {
@@ -267,6 +308,7 @@ export const skills: Skill[] = [
     exp: 2,
     effect: "清除中毒层数并免疫一段时间。",
     description: "回复流克毒核心技。",
+    statBonuses: { hp: 160, energy: 2 },
     verified: false,
   },
   {
@@ -278,6 +320,7 @@ export const skills: Skill[] = [
     exp: 3,
     effect: "大幅提升回复量，回复时附加减伤。",
     description: "回复流传奇，续航质变。",
+    statBonuses: { hp: 280, energy: 3 },
     verified: false,
   },
   // 易伤流
@@ -290,6 +333,7 @@ export const skills: Skill[] = [
     exp: 1,
     effect: "攻击附加易伤，受击增伤。",
     description: "易伤流基础标记技。",
+    statBonuses: { attack: 5 },
     verified: false,
   },
   {
@@ -301,6 +345,7 @@ export const skills: Skill[] = [
     exp: 2,
     effect: "易伤触发时额外增伤并破甲。",
     description: "易伤流触发增伤技。",
+    statBonuses: { attack: 10 },
     verified: false,
   },
   {
@@ -312,6 +357,7 @@ export const skills: Skill[] = [
     exp: 3,
     effect: "易伤层数叠满造成爆发真实伤害。",
     description: "易伤流传奇爆发技。",
+    statBonuses: { attack: 18 },
     verified: false,
   },
   // 精灵流
@@ -324,6 +370,7 @@ export const skills: Skill[] = [
     exp: 1,
     effect: "召唤精灵随从作战。",
     description: "精灵流基础召唤技。",
+    statBonuses: { attack: 5, energy: 1 },
     verified: false,
   },
   {
@@ -335,6 +382,7 @@ export const skills: Skill[] = [
     exp: 2,
     effect: "精灵规模提升，随从属性增强。",
     description: "精灵流规模强化技。",
+    statBonuses: { attack: 10, energy: 2 },
     verified: false,
   },
   {
@@ -346,6 +394,7 @@ export const skills: Skill[] = [
     exp: 3,
     effect: "召唤精灵王，规模质变压制全场。",
     description: "精灵流传奇，成型质变。",
+    statBonuses: { attack: 18, energy: 3 },
     verified: false,
   },
 
@@ -360,6 +409,7 @@ export const skills: Skill[] = [
     exp: 1,
     effect: "普攻有概率连击，造成双倍打击。",
     description: "普攻流基础连击，强化攻击频率。",
+    statBonuses: { attackSpeed: 0.05, attack: 5 },
     verified: false,
   },
   {
@@ -372,6 +422,7 @@ export const skills: Skill[] = [
     effect: "普攻每第3次触发一次范围旋风斩。",
     description: "普攻流节奏技，强化清场与溅射。",
     starBonuses: ["旋风伤害+30%", "旋风伤害+50%", "旋风伤害+70%", "旋风伤害+100%"],
+    statBonuses: { attackSpeed: 0.1, attack: 10 },
     verified: false,
   },
   {
@@ -384,6 +435,7 @@ export const skills: Skill[] = [
     effect: "攻速突破上限，普攻附带风刃穿透。",
     description: "普攻流传奇，攻速与穿透双拉满。",
     starBonuses: ["攻速+30%", "攻速+50%", "攻速+70%", "攻速+100%"],
+    statBonuses: { attackSpeed: 0.15, attack: 18 },
     verified: false,
   },
   // 暴击流
@@ -396,6 +448,7 @@ export const skills: Skill[] = [
     exp: 1,
     effect: "提升暴击率与爆伤。",
     description: "暴击流基础强化技。",
+    statBonuses: { crit: 5, critDamage: 0.2 },
     verified: false,
   },
   {
@@ -408,6 +461,7 @@ export const skills: Skill[] = [
     effect: "暴击时溢出的暴击率转化为额外爆伤。",
     description: "暴击流收益转化技，突破后期瓶颈。",
     starBonuses: ["转化+30%", "转化+50%", "转化+70%", "转化+100%"],
+    statBonuses: { crit: 10, critDamage: 0.4 },
     verified: false,
   },
   {
@@ -420,6 +474,7 @@ export const skills: Skill[] = [
     effect: "标记目标，对其暴击造成真实伤害。",
     description: "暴击流传奇，稳定真实爆发。",
     starBonuses: ["真伤+30%", "真伤+50%", "真伤+70%", "真伤+100%"],
+    statBonuses: { crit: 15, critDamage: 0.6 },
     verified: false,
   },
   {
@@ -432,6 +487,7 @@ export const skills: Skill[] = [
     effect: "暴击击杀回复能量并刷新暴击触发。",
     description: "暴击流传奇，收割循环技。",
     starBonuses: ["回能+30%", "回能+50%", "回能+70%", "回能+100%"],
+    statBonuses: { crit: 15, critDamage: 0.6 },
     verified: false,
   },
   // 闪避流
@@ -445,6 +501,7 @@ export const skills: Skill[] = [
     effect: "闪避后留下分身持续输出并吸引火力。",
     description: "闪避流传奇，规避即反击质变。",
     starBonuses: ["分身伤害+30%", "分身伤害+50%", "分身伤害+70%", "分身伤害+100%"],
+    statBonuses: { dodge: 15 },
     verified: false,
   },
   // 生命流
@@ -457,6 +514,7 @@ export const skills: Skill[] = [
     exp: 1,
     effect: "提升血量上限，损血时回蓝加速。",
     description: "生命流基础血量技。",
+    statBonuses: { hp: 80 },
     verified: false,
   },
   {
@@ -469,6 +527,7 @@ export const skills: Skill[] = [
     effect: "主动消耗血量换取巨额攻击增益。",
     description: "生命流核心资源技。",
     starBonuses: ["增益+30%", "增益+50%", "增益+70%", "增益+100%"],
+    statBonuses: { hp: 160 },
     verified: false,
   },
   {
@@ -481,6 +540,7 @@ export const skills: Skill[] = [
     effect: "血量低于阈值免疫死亡并爆发真实伤害。",
     description: "生命流传奇，绝地反杀技。",
     starBonuses: ["爆发+30%", "爆发+50%", "爆发+70%", "爆发+100%"],
+    statBonuses: { hp: 280 },
     verified: false,
   },
   // 大招流
@@ -493,6 +553,7 @@ export const skills: Skill[] = [
     exp: 1,
     effect: "提升回蓝速度，受击额外回蓝。",
     description: "大招流基础回蓝图。",
+    statBonuses: { energy: 1, attack: 5 },
     verified: false,
   },
   {
@@ -505,6 +566,7 @@ export const skills: Skill[] = [
     effect: "大招释放后短时间内连发二次。",
     description: "大招流双发强化技。",
     starBonuses: ["二次伤害+30%", "二次伤害+50%", "二次伤害+70%", "二次伤害+100%"],
+    statBonuses: { energy: 2, attack: 10 },
     verified: false,
   },
   {
@@ -517,6 +579,7 @@ export const skills: Skill[] = [
     effect: "大招伤害随回蓝比例提升。",
     description: "大招流质量放大技。",
     starBonuses: ["增幅+30%", "增幅+50%", "增幅+70%", "增幅+100%"],
+    statBonuses: { energy: 2, attack: 10 },
     verified: false,
   },
   {
@@ -529,6 +592,7 @@ export const skills: Skill[] = [
     effect: "大招附带斩杀效果，对低血目标爆发。",
     description: "大招流传奇，质量加斩杀。",
     starBonuses: ["斩杀+30%", "斩杀+50%", "斩伤+70%", "斩杀+100%"],
+    statBonuses: { energy: 3, attack: 18 },
     verified: false,
   },
   // 中毒流
@@ -541,6 +605,7 @@ export const skills: Skill[] = [
     exp: 1,
     effect: "攻击附加少量中毒层数。",
     description: "中毒流基础叠层技。",
+    statBonuses: { energy: 1, attack: 5 },
     verified: false,
   },
   {
@@ -553,6 +618,7 @@ export const skills: Skill[] = [
     effect: "中毒层数上限提升，叠层速度翻倍。",
     description: "中毒流叠层加速技。",
     starBonuses: ["叠层+30%", "叠层+50%", "叠层+70%", "叠层+100%"],
+    statBonuses: { energy: 2, attack: 10 },
     verified: false,
   },
   {
@@ -565,6 +631,7 @@ export const skills: Skill[] = [
     effect: "中毒目标死亡时层数传染全场。",
     description: "中毒流传奇，连锁清场技。",
     starBonuses: ["传染+30%", "传染+50%", "传染+70%", "传染+100%"],
+    statBonuses: { energy: 3, attack: 18 },
     verified: false,
   },
   // 冰冻流
@@ -578,6 +645,7 @@ export const skills: Skill[] = [
     effect: "冰冻质变为冻结，目标无法行动。",
     description: "冰冻流传奇，最强控场技。",
     starBonuses: ["冻结+30%", "冻结+50%", "冻结+70%", "冻结+100%"],
+    statBonuses: { energy: 3, attack: 18 },
     verified: false,
   },
   // 护盾流
@@ -590,6 +658,7 @@ export const skills: Skill[] = [
     exp: 1,
     effect: "受击时生成临时护盾。",
     description: "护盾流基础减伤技。",
+    statBonuses: { hp: 80 },
     verified: false,
   },
   {
@@ -602,6 +671,7 @@ export const skills: Skill[] = [
     effect: "护盾吸收伤害并反弹部分物理伤害。",
     description: "护盾流反伤核心技。",
     starBonuses: ["反伤+30%", "反伤+50%", "反伤+70%", "反伤+100%"],
+    statBonuses: { hp: 160 },
     verified: false,
   },
   {
@@ -614,6 +684,7 @@ export const skills: Skill[] = [
     effect: "护盾存在时大幅减伤并免疫控制。",
     description: "护盾流传奇，终极防御技。",
     starBonuses: ["减伤+30%", "减伤+50%", "减伤+70%", "减伤+100%"],
+    statBonuses: { hp: 280 },
     verified: false,
   },
   {
@@ -626,6 +697,7 @@ export const skills: Skill[] = [
     effect: "护盾破碎后短时间重生，循环续航。",
     description: "护盾流传奇，循环续航技。",
     starBonuses: ["重生+30%", "重生+50%", "重生+70%", "重生+100%"],
+    statBonuses: { hp: 280 },
     verified: false,
   },
   // 精灵流
@@ -638,6 +710,7 @@ export const skills: Skill[] = [
     exp: 1,
     effect: "召唤一只精灵随从持续作战。",
     description: "精灵流基础召唤技。",
+    statBonuses: { attack: 5, energy: 1 },
     verified: false,
   },
   {
@@ -650,6 +723,7 @@ export const skills: Skill[] = [
     effect: "随从属性与主角联动，共享攻击力。",
     description: "精灵流联动强化技。",
     starBonuses: ["共享+30%", "共享+50%", "共享+70%", "共享+100%"],
+    statBonuses: { attack: 10, energy: 2 },
     verified: false,
   },
   {
@@ -662,6 +736,7 @@ export const skills: Skill[] = [
     effect: "召唤元素领主，规模与属性双质变。",
     description: "精灵流传奇，终极召唤。",
     starBonuses: ["规模+30%", "规模+50%", "规模+70%", "规模+100%"],
+    statBonuses: { attack: 18, energy: 3 },
     verified: false,
   },
   // 怒气流
@@ -674,6 +749,7 @@ export const skills: Skill[] = [
     exp: 1,
     effect: "攻击积攒怒气，怒气满时增伤。",
     description: "怒气流基础积攒技。",
+    statBonuses: { attack: 5, crit: 5 },
     verified: false,
   },
   {
@@ -686,6 +762,7 @@ export const skills: Skill[] = [
     effect: "消耗怒气换取面板攻击大幅提升。",
     description: "怒气流核心增益技。",
     starBonuses: ["增益+30%", "增益+50%", "增益+70%", "增益+100%"],
+    statBonuses: { attack: 10, crit: 10 },
     verified: false,
   },
   {
@@ -698,6 +775,7 @@ export const skills: Skill[] = [
     effect: "击杀回复怒气并刷新增益。",
     description: "怒气流循环收割技。",
     starBonuses: ["回怒+30%", "回怒+50%", "回怒+70%", "回怒+100%"],
+    statBonuses: { attack: 10, crit: 10 },
     verified: false,
   },
   {
@@ -710,6 +788,7 @@ export const skills: Skill[] = [
     effect: "消耗全部怒气造成面板最高真实伤害破盾。",
     description: "怒气流传奇，终极致命一击。",
     starBonuses: ["伤害+30%", "伤害+50%", "伤害+70%", "伤害+100%"],
+    statBonuses: { attack: 18, crit: 15 },
     verified: false,
   },
 ];

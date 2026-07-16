@@ -9,11 +9,34 @@ import { cn } from "@/lib/utils";
 import type { Hero, Treasure } from "@/lib/types";
 import type { StatPanel } from "@/lib/game-mechanics";
 
-function StatRow({ label, value }: { label: string; value: string }) {
+/** 去除浮点累加误差，保留至多 2 位小数并去尾零 */
+function formatStat(value: number): string {
+  return String(parseFloat(value.toFixed(2)));
+}
+
+function StatRow({
+  label,
+  value,
+  bonus,
+  suffix = "",
+}: {
+  label: string;
+  value: string;
+  bonus?: number;
+  suffix?: string;
+}) {
+  const hasBonus = bonus !== undefined && bonus > 0;
   return (
     <div className="flex items-center justify-between rounded-md bg-secondary/40 px-2.5 py-1.5">
       <span className="text-xs text-muted-foreground">{label}</span>
-      <span className="text-sm font-medium">{value}</span>
+      <span className="text-sm font-medium">
+        {value}
+        {hasBonus && (
+          <span className="ml-1 text-xs text-emerald-500">
+            (+{formatStat(bonus)}{suffix})
+          </span>
+        )}
+      </span>
     </div>
   );
 }
@@ -108,16 +131,16 @@ export function StatPanelView({
         <div>
           <h4 className="mb-2 text-sm font-semibold">基础属性</h4>
           <div className="grid gap-1.5 sm:grid-cols-2">
-            <StatRow label="攻击力" value={`${panel.attack}`} />
-            <StatRow label="攻速" value={`${panel.attackSpeed}`} />
-            <StatRow label="回蓝" value={`${panel.energy}`} />
-            <StatRow label="闪避" value={`${panel.dodge}%`} />
-            <StatRow label="暴击" value={`${panel.crit}%`} />
-            <StatRow label="爆伤" value={`${panel.critDamage}x`} />
+            <StatRow label="攻击力" value={formatStat(panel.attack)} bonus={panel.bonuses.attack} />
+            <StatRow label="攻速" value={formatStat(panel.attackSpeed)} bonus={panel.bonuses.attackSpeed} />
+            <StatRow label="回蓝" value={formatStat(panel.energy)} bonus={panel.bonuses.energy} />
+            <StatRow label="闪避" value={`${formatStat(panel.dodge)}%`} bonus={panel.bonuses.dodge} suffix="%" />
+            <StatRow label="暴击" value={`${formatStat(panel.crit)}%`} bonus={panel.bonuses.crit} suffix="%" />
+            <StatRow label="爆伤" value={`${formatStat(panel.critDamage)}x`} bonus={panel.bonuses.critDamage} suffix="x" />
           </div>
           <p className="mt-2 flex items-center gap-1 text-xs text-yellow-500/80">
             <Info className="size-3.5" />
-            技能加成待实现，攻击/攻速等暂为基础值。
+            含技能加成，数值待校对。
           </p>
         </div>
 
