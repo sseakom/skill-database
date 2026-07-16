@@ -44,13 +44,15 @@ export default function CounterChartPage() {
         </p>
       </header>
 
-      {/* 图谱（正方形响应式） */}
-      <div className="mx-auto aspect-square w-full max-w-[640px]">
-        <CounterGraph
-          factions={factions}
-          selectedId={selectedId}
-          onSelect={handleSelect}
-        />
+      {/* 图谱（正方形响应式；小屏给最小宽度 + 横向滚动，保证节点文字可读） */}
+      <div className="mx-auto w-full max-w-[640px] overflow-x-auto">
+        <div className="aspect-square min-w-[480px]">
+          <CounterGraph
+            factions={factions}
+            selectedId={selectedId}
+            onSelect={handleSelect}
+          />
+        </div>
       </div>
 
       {/* 图例 */}

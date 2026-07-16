@@ -32,7 +32,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <SiteHeader />
         <main className="flex-1">{children}</main>
-        <footer className="border-t border-border py-6 text-center text-xs text-muted-foreground">
+        <footer className="border-t border-border px-4 py-6 text-center text-xs text-muted-foreground">
           非官方社区数据库 · 数据仅供参考，部分数值待校对 · 游戏版权归其所有者
         </footer>
       </body>
