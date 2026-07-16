@@ -105,7 +105,8 @@ export function CounterGraph({
       const offset = 60;
       const cpx = mx + (cdx / cLen) * offset;
       const cpy = my + (cdy / cLen) * offset;
-      return `M ${sx} ${sy} Q ${cpx} ${cpy} ${ex} ${ey}`;
+      // toFixed(2) 避免 SSR/CSR 浮点末位差异导致 hydration mismatch
+      return `M ${sx.toFixed(2)} ${sy.toFixed(2)} Q ${cpx.toFixed(2)} ${cpy.toFixed(2)} ${ex.toFixed(2)} ${ey.toFixed(2)}`;
     };
   }, [posMap]);
 
@@ -202,7 +203,7 @@ export function CounterGraph({
           return (
             <g
               key={f.id}
-              transform={`translate(${p.x} ${p.y})`}
+              transform={`translate(${p.x.toFixed(2)} ${p.y.toFixed(2)})`}
               style={{ cursor: "pointer" }}
               opacity={opacity}
               onClick={() => onSelect(f.id)}
